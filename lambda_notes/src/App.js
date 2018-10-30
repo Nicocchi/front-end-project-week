@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import './App.css';
 import Styled from 'styled-components';
 
-import axios from 'axios';
 import { Route, withRouter } from 'react-router-dom';
 
 import Navigation from './components/Navigation/Navigation';

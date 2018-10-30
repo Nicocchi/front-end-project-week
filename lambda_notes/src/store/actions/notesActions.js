@@ -27,7 +27,7 @@ export const SORT_NOTES_BACK = 'SORT_NOTES_BACK';
 export const getNotes = () => dispatch => {
     dispatch({ type: NOTES_FETCH_START });
     
-    axios.get('https://killer-notes.herokuapp.com/note/get/all')
+    axios.get('http://localhost:8000/api/notes/get/all')
         .then(response => {
             dispatch({ type: NOTES_FETCH_COMPLETE, payload: response.data });
         })
@@ -38,13 +38,15 @@ export const getNotes = () => dispatch => {
 
 export const addNewNote = note => dispatch => {
     dispatch({ type: ADD_NOTE_START });
+    console.log('ADD',note);
 
-    axios.post('https://killer-notes.herokuapp.com/note/create', note)
+    axios.post('http://localhost:8000/api/note/create', note)
         .then(() => getNotes()(dispatch))
         .then(() => {
             dispatch({ type: ADD_NOTE_COMPLETE });
         })
         .catch(err => {
+            console.log('ADD ERROR',err);
             dispatch({ type: ADD_NOTE_FAILURE, payload: err });
         })
 };
@@ -52,7 +54,7 @@ export const addNewNote = note => dispatch => {
 export const deleteNote = id => dispatch => {
     dispatch({ type: DELETE_NOTE_START });
 
-    axios.delete(`https://killer-notes.herokuapp.com/note/delete/${id}`)
+    axios.delete(`http://localhost:8000/api/note/remove/${id}`)
         .then(() => getNotes()(dispatch))
         .then(() => {
             dispatch({ type: DELETE_NOTE_COMPLETE });
@@ -69,13 +71,13 @@ export const setUpdateNote = id => dispatch => {
 export const updateNote = note => dispatch => {
     dispatch({ type: UPDATE_NOTE_START });
     const nNote = {
-        _id: note._id,
+        id: note.id,
         tags: note.tags,
         title: note.title,
-        textBody : note.textBody,
+        content : note.content,
     };
 
-    axios.put(`https://killer-notes.herokuapp.com/note/edit/${nNote._id}`, nNote)
+    axios.put(`http://localhost:8000/api/note/edit/${nNote.id}`, nNote)
         .then(() => getNotes()(dispatch))
         .then(() => {
             dispatch({ type: UPDATE_NOTE_COMPLETE });

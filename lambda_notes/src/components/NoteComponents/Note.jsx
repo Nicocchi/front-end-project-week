@@ -51,13 +51,19 @@ const Content = Styled.div`
 `;
 
 function Note(props) {
-    const tags = props.note.tags.join(', ');
+    let tags = props.note.tags;
+    let tags2;
+    if(!tags || tags === null) {
+        tags2 = []
+    } else {
+        tags2 = tags;
+    }
     return (
         <Container>
-             <NavLink to={`/notes/${props.note._id}`} >
+             <NavLink to={`/notes/${props.note.id}`} >
                  <Header><h1>{props.note.title}</h1></Header>
-                 <Tags>{tags}</Tags>
-                 <Content className="block-with-text">{props.note.textBody}</Content>
+                 <Tags>{tags2}</Tags>
+                 <Content className="block-with-text">{props.note.content}</Content>
              </NavLink>
          </Container>
 

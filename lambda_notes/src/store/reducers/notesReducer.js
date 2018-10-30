@@ -68,7 +68,7 @@ export const notesReducer = (state = initialState, action) => {
             console.log('DELETE_NOTE_FAILURE' ,action.paylaod);
             return { ...state, isDeleteing: false, error: action.payload };
         case SET_UPDATE_NOTE:
-            const note = state.notes.map(note => note).filter(note => note._id === action.payload);
+            const note = state.notes.map(note => note).filter(note => note.id === action.payload);
             return { ...state, filtered: false, isUpdating: true, noteToUpdate: note};
         case TOGGLE_UPDATE_NOTE:
             return { ...state, filtered: false, isUpdating: false };

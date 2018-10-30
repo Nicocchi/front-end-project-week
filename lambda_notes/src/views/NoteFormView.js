@@ -8,10 +8,9 @@ import NoteCreateForm from '../components/NoteComponents/NoteCreateForm';
 class NoteFormView extends Component {
     state = {
         note: {
-            _id: '',
-            tags: [],
+            tags: '',
             title: '',
-            textBody: '',
+            content: '',
         },
         isUpdating: false,
     };
@@ -23,22 +22,28 @@ class NoteFormView extends Component {
     };
 
     handleChange = e => {
-        if (e.target.name === 'tags') {
-            const tags = e.target.value.split(',');
-            this.setState({
-                note: {
-                    ...this.state.note,
-                    tags,
-                }
-            });
-        } else {
-            this.setState({
-                note: {
-                    ...this.state.note,
-                    [e.target.name]: e.target.value,
-                }
-            });
-        }
+        this.setState({
+            note: {
+                ...this.state.note,
+                [e.target.name]: e.target.value,
+            }
+        });
+        // if (e.target.name === 'tags') {
+        //     const tags = e.target.value.split(',');
+        //     this.setState({
+        //         note: {
+        //             ...this.state.note,
+        //             tags,
+        //         }
+        //     });
+        // } else {
+        //     this.setState({
+        //         note: {
+        //             ...this.state.note,
+        //             [e.target.name]: e.target.value,
+        //         }
+        //     });
+        // }
     }
 
     handleAddNewNote = e => {

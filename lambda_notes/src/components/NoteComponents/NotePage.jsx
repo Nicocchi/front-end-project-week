@@ -2,6 +2,7 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { Modal } from 'mdbreact';
 import Styled from 'styled-components';
+import ReactMarkdown from 'react-markdown';
 
 const Wrapper = Styled.div`
     margin-top: 30px;
@@ -74,14 +75,16 @@ class NotePage extends React.Component {
 
     componentDidMount() {
         const note = this.props.notes.find(
-            note => note._id === this.props.match.params.id
+            notes => notes.id === Number(this.props.match.params.id)
         );
+
+        console.log('NOTE', note);
 
         this.setState({ note });
     }
 
     handleDelete = () => {
-        this.props.handleDeleteNote(this.state.note._id);
+        this.props.handleDeleteNote(this.state.note.id);
         this.props.history.push('/');
     };
 
@@ -92,17 +95,25 @@ class NotePage extends React.Component {
     }
 
     render() {
+        let tags = this.state.note.tags;
+        let tags2;
+        if(!tags || tags === null) {
+            tags2 = []
+        } else {
+            tags2 = tags;
+    }
         return (
             <Wrapper>
                 <Header>
-                    <LinkD><NavLink to="/form" onClick={event => this.props.goToForm(event, this.state.note._id)} style={{color: "#4a494a" }}>Edit</NavLink></LinkD>
+                    <LinkD><NavLink to="/form" onClick={event => this.props.goToForm(event, this.state.note.id)} style={{color: "#4a494a" }}>Edit</NavLink></LinkD>
                     <LinkD><NavLink to="/" onClick={this.toggle} style={{color: "#4a494a" }}>Delete</NavLink></LinkD>
                 </Header>
                 <h1>{this.state.note.title}</h1>
-                <h5>Tags: {this.state.note.tags}</h5>
+                <h5>Tags: {tags2}</h5>
                 <br />
                 <h5>Summary</h5>
-                <p>{this.state.note.textBody}</p>
+                <ReactMarkdown source={this.state.note.content} />
+                {/* <p>{this.state.note.textBody}</p> */}
     
                 <Modal isOpen={this.state.modal14} toggle={this.toggle} centered>
                 <ModalContainer>

@@ -1,5 +1,4 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import Styled from 'styled-components';
 
 const Wrapper = Styled.div`
@@ -46,7 +45,7 @@ function NoteCreateForm(props) {
                 <br />
                 <input type="text" placeholder="Note Tags (Seperate with a , )" name="tags" id="defaultFormContactNameEx" className="form-control" value={props.note.tags} onChange={props.handleChange}/>
                 <br/>
-                <textarea type="text" placeholder="Note Content" name="textBody" id="defaultFormContactMessageEx" className="form-control" rows="3" value={props.note.textBody} onChange={props.handleChange}></textarea>
+                <textarea type="text" placeholder="Note Content" name="content" id="defaultFormContactMessageEx" className="form-control" rows="3" value={props.note.content} onChange={props.handleChange}></textarea>
                 <Button type="button" onClick={handleSubmit}>{props.isUpdating ? 'Update' : 'Save'}</Button>
             </form>
         </Wrapper>
