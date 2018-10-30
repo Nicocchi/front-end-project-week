@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 import { FormInline, Fa } from 'mdbreact';
 import Styled from 'styled-components';
 import { connect } from 'react-redux';
-import { toggleUpdateNote, searchNote, searchNoteOff, sortNotesFront, sortNotesBack } from '../../store/actions';
+import { toggleUpdateNote, searchNote, searchNoteOff, sortNotesFront, sortNotesBack, logoutUser, } from '../../store/actions';
 
 const Header = Styled.header`
     height: 100%;
@@ -92,7 +92,22 @@ class Navigation extends Component {
         }
       }
 
+      handleLogout = e => {
+          if(localStorage.getItem('jwt')) {
+              localStorage.removeItem('jwt');
+              this.props.logoutUser;
+          } else {
+          }
+      }
+
     render() {
+        let isLogged = false;
+        if(localStorage.getItem('jwt')) {
+            isLogged = true;
+        } else {
+            isLogged = false;
+        }
+
         return (
             <Header>
                 <h1>Lambda</h1>
@@ -103,6 +118,11 @@ class Navigation extends Component {
                     <input value={this.state.inputValue} onChange={e => this.handleChange(e)}  className="form-control form-control-sm ml-3 w-75" type="text" placeholder="Search" aria-label="Search"/>
                 </FormInline>
                 </Search>
+                <div>
+                    {!isLogged ? <NavLink to="/login"><Button type="button" onClick={this.props.toggleUpdateNote}>Login</Button></NavLink> : <NavLink to="/"><Button type="button" onClick={this.handleLogout}>Logout</Button></NavLink>}
+                </div>
+                {/*<NavLink to="/login"><Button type="button" onClick={this.props.toggleUpdateNote}>Login</Button></NavLink>*/}
+                {/*<NavLink to="/"><Button type="button" onClick={this.handleLogout}>Logout</Button></NavLink>*/}
                 <NavLink to="/"><Button type="button" onClick={this.props.toggleUpdateNote}>View Your Notes</Button></NavLink>
                 <NavLink to="/form"><Button type="button" onClick={this.props.toggleUpdateNote}>+ Create A New Note</Button></NavLink>
                 <br />
@@ -117,7 +137,8 @@ class Navigation extends Component {
 // export default Navigation;
 
 const mapStateToProps = state => ({
-  notes: state.notes,  
+  notes: state.notes,
+    isLoggedIn: state.isLoggingIn
 });
 
 export default connect(mapStateToProps, { toggleUpdateNote, searchNote, searchNoteOff, sortNotesFront, sortNotesBack })(Navigation)

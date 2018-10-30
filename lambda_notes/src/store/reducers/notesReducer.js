@@ -17,6 +17,12 @@ import {
     SEARCH_NOTE_OFF,
     SORT_NOTES_FRONT,
     SORT_NOTES_BACK,
+    LOGIN_USER_START,
+    LOGIN_USER_COMPLETE,
+    LOGIN_USER_FAILURE,
+    LOGOUT_USER_START,
+    LOGOUT_USER_COMPLETE,
+    LOGOUT_USER_FAILURE,
 } from '../actions';
 
 const initialState = {
@@ -31,6 +37,8 @@ const initialState = {
     filteredNotes: null,
     sorted: false,
     sort: null,
+    isLoggingIn: false,
+    isLoggedIn: false,
 };
 
 export const notesReducer = (state = initialState, action) => {
@@ -65,7 +73,7 @@ export const notesReducer = (state = initialState, action) => {
         case DELETE_NOTE_COMPLETE:
             return { ...state, isDeleting: false };
         case DELETE_NOTE_FAILURE:
-            console.log('DELETE_NOTE_FAILURE' ,action.paylaod);
+            console.log('DELETE_NOTE_FAILURE' ,action.payload);
             return { ...state, isDeleteing: false, error: action.payload };
         case SET_UPDATE_NOTE:
             const note = state.notes.map(note => note).filter(note => note.id === action.payload);
@@ -87,6 +95,24 @@ export const notesReducer = (state = initialState, action) => {
             return { ...state, sorted: true, sort: 'front', notes: action.payload }
         case SORT_NOTES_BACK:
             return { ...state, sorted: true, sort: 'back', notes: action.payload }
+        case LOGIN_USER_START:
+            return { ...state, isLoggingIn: true }
+        case LOGIN_USER_COMPLETE:
+            return { ...state, isLoggingIn: false, isLoggedIn: true};
+        case LOGIN_USER_FAILURE:
+            if(localStorage.getItem('jwt')) {
+                localStorage.removeItem('jwt');
+            };
+            return { ...state, isLoggingIn: false, isLoggedIn: false };
+        case LOGOUT_USER_START:
+            return { ...state, isLoggingIn: true, isLoggedIn: true }
+        case LOGOUT_USER_COMPLETE:
+            return { ...state, isLoggingIn: false, isLoggedIn: true};
+        case LOGOUT_USER_FAILURE:
+            if(localStorage.getItem('jwt')) {
+                localStorage.removeItem('jwt');
+            };
+            return { ...state, isLoggingIn: false, isLoggedIn: false };
         default:
             return state;
     }

@@ -24,10 +24,26 @@ export const SEARCH_NOTE_OFF = 'SEARCH_NOTE_OFF';
 export const SORT_NOTES_FRONT = 'SORT_NOTES_FRONT';
 export const SORT_NOTES_BACK = 'SORT_NOTES_BACK';
 
+export const LOGIN_USER_START = 'LOGIN_USER_START';
+export const LOGIN_USER_COMPLETE = 'LOGIN_USER_COMPLETE';
+export const LOGIN_USER_FAILURE = 'LOGIN_USER_FAILURE';
+
+export const LOGOUT_USER_START = 'LOGOUT_USER_START';
+export const LOGOUT_USER_COMPLETE = 'LOGOUT_USER_COMPLETE';
+export const LOGOUT_USER_FAILURE = 'LOGOUT_USER_FAILURE';
+
 export const getNotes = () => dispatch => {
     dispatch({ type: NOTES_FETCH_START });
+    const token = localStorage.getItem("jwt");
+    const endpoint = 'http://localhost:8000/api/notes/get/all';
+    const options = {
+        headers: {
+            Authorization: token
+        }
+    };
+
     
-    axios.get('http://localhost:8000/api/notes/get/all')
+    axios.get(endpoint, options)
         .then(response => {
             dispatch({ type: NOTES_FETCH_COMPLETE, payload: response.data });
         })
@@ -38,9 +54,15 @@ export const getNotes = () => dispatch => {
 
 export const addNewNote = note => dispatch => {
     dispatch({ type: ADD_NOTE_START });
-    console.log('ADD',note);
+    const token = localStorage.getItem("jwt");
+    const endpoint = 'http://localhost:8000/api/note/create';
+    const options = {
+        headers: {
+            Authorization: token
+        }
+    };
 
-    axios.post('http://localhost:8000/api/note/create', note)
+    axios.post(endpoint, note, options)
         .then(() => getNotes()(dispatch))
         .then(() => {
             dispatch({ type: ADD_NOTE_COMPLETE });
@@ -53,8 +75,15 @@ export const addNewNote = note => dispatch => {
 
 export const deleteNote = id => dispatch => {
     dispatch({ type: DELETE_NOTE_START });
+    const token = localStorage.getItem("jwt");
+    const endpoint = `http://localhost:8000/api/note/remove/${id}`;
+    const options = {
+        headers: {
+            Authorization: token
+        }
+    };
 
-    axios.delete(`http://localhost:8000/api/note/remove/${id}`)
+    axios.delete(endpoint, options)
         .then(() => getNotes()(dispatch))
         .then(() => {
             dispatch({ type: DELETE_NOTE_COMPLETE });
@@ -70,6 +99,13 @@ export const setUpdateNote = id => dispatch => {
 
 export const updateNote = note => dispatch => {
     dispatch({ type: UPDATE_NOTE_START });
+    const token = localStorage.getItem("jwt");
+    const options = {
+        headers: {
+            Authorization: token
+        }
+    };
+
     const nNote = {
         id: note.id,
         tags: note.tags,
@@ -77,7 +113,8 @@ export const updateNote = note => dispatch => {
         content : note.content,
     };
 
-    axios.put(`http://localhost:8000/api/note/edit/${nNote.id}`, nNote)
+    const endpoint = `http://localhost:8000/api/note/edit/${nNote.id}`;
+    axios.put(endpoint, nNote, options)
         .then(() => getNotes()(dispatch))
         .then(() => {
             dispatch({ type: UPDATE_NOTE_COMPLETE });
@@ -109,4 +146,14 @@ export const sortNotesBack = notes => dispatch => {
 
     const noteList = notes.sort((a,b) => {return a.title.toLowerCase().localeCompare(b.title.toLowerCase());}).reverse();
     return dispatch({ type: SORT_NOTES_BACK, payload: noteList});
+}
+
+export const loginUser = () => dispatch => {
+    dispatch({ type: LOGIN_USER_START });
+
+}
+
+export const logoutUser = () => dispatch => {
+    dispatch({ type: LOGOUT_USER_START });
+
 }

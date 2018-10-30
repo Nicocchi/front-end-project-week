@@ -10,6 +10,10 @@ const Wrapper = Styled.div`
 
 `;
 
+const P = Styled.p`
+    color: #4a494a;
+`
+
 const Header = Styled.header`
     font-weight: bold;
     padding-left: 1%;
@@ -31,11 +35,18 @@ const Container = Styled.div`
 `;
 
 function NoteContainer(props) {
+    let isLogged = false;
+    if(localStorage.getItem('jwt')) {
+        isLogged = true;
+    } else {
+        isLogged = false;
+    }
     return (
         <Wrapper>
             <Header><h1>Your Notes:</h1></Header>
+            <P>{!isLogged ? 'You must login to view your notes' : ''}</P>
             <Container>
-                <NoteList notes={props.notes} />
+                {!isLogged ? '' : <NoteList notes={props.notes} />}
             </Container>
             
         </Wrapper>

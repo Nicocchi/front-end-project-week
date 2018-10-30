@@ -1,4 +1,6 @@
-export { 
+import { LOGIN_USER_COMPLETE } from "./notesActions";
+
+export {
     NOTES_FETCH_START,
     NOTES_FETCH_COMPLETE,
     NOTES_FETCH_FAILURE,
@@ -23,6 +25,14 @@ export {
     SORT_NOTES_FRONT,
     SORT_NOTES_BACK,
 
+    LOGIN_USER_START,
+    LOGIN_USER_COMPLETE,
+    LOGIN_USER_FAILURE,
+
+    LOGOUT_USER_START,
+    LOGOUT_USER_COMPLETE,
+    LOGOUT_USER_FAILURE,
+
     getNotes,
     addNewNote,
     deleteNote,
@@ -33,4 +43,6 @@ export {
     searchNoteOff,
     sortNotesFront,
     sortNotesBack,
+    loginUser,
+    logoutUser,
 } from './notesActions';
