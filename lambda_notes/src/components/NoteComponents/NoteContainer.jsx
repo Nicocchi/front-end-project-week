@@ -12,6 +12,8 @@ const Wrapper = Styled.div`
 
 const P = Styled.p`
     color: #4a494a;
+    font-size: 20px;
+    margin-left: 3%;
 `
 
 const Header = Styled.header`

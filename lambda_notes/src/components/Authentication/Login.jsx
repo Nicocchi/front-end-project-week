@@ -27,6 +27,10 @@ const Button = Styled.button`
     margin-top: 20px;
 `;
 
+const Error = Styled.p`
+    color: red;
+`;
+
 function Login(props) {
     function handleSubmit(e) {
         e.preventDefault();
@@ -40,6 +44,7 @@ function Login(props) {
                 <input type="text" placeholder="Email" name="email" id="defaultFormContactNameEx" className="form-control" defaultValue={props.user.email} onChange={props.handleChange} />
                 <br />
                 <input type="password" placeholder="Password" name="password" id="defaultFormContactNameEx" className="form-control" value={props.user.password} onChange={props.handleChange} />
+                <Error>{props.error}</Error>
                 <br/>
                 <Button type="button" onClick={handleSubmit}>Login</Button>
                 <br/><br/>

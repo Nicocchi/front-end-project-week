@@ -11,6 +11,7 @@ class LoginView extends Component {
             password: '',
         },
         isUpdating: false,
+        error: '',
     };
 
     handleChange = e => {
@@ -22,18 +23,32 @@ class LoginView extends Component {
         });
     }
 
+    validateEmail = email => {
+        const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return re.test(email);
+    }
+
     userLogin = e => {
         // this.props.loginUser(this.state.user);
+        if(!this.validateEmail(this.state.user.email)) {
+            this.setState({ error: 'Invalid email address.'});
+            return;
+        }
+
         const endpoint = 'http://localhost:8000/api/users/login';
-        console.log(this.state.user);
 
         axios.post(endpoint, this.state.user).then(res => {
+            this.setState({
+                error: ''
+            });
             localStorage.setItem('jwt', res.data.token);
             this.props.setId(res.data.userId);
             this.props.loginUser();
             this.props.history.push('/');
         }).catch(err => {
-            console.log('LOGIN ERROR', err);
+            this.setState({
+                error: err.response.data.error
+            });
         });
     }
 
@@ -42,6 +57,7 @@ class LoginView extends Component {
             <Login
                 {...this.props}
                 user={this.state.user}
+                error={this.state.error}
                 handleChange={this.handleChange}
                 loginUser={this.userLogin}
             />

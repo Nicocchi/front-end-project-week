@@ -124,12 +124,13 @@ class Navigation extends Component {
                 </div>
                 {/*<NavLink to="/login"><Button type="button" onClick={this.props.toggleUpdateNote}>Login</Button></NavLink>*/}
                 {/*<NavLink to="/"><Button type="button" onClick={this.handleLogout}>Logout</Button></NavLink>*/}
-                <NavLink to="/"><Button type="button" onClick={this.props.toggleUpdateNote}>View Your Notes</Button></NavLink>
-                <NavLink to="/form"><Button type="button" onClick={this.props.toggleUpdateNote}>+ Create A New Note</Button></NavLink>
-                <br />
-                <h3>Sort Notes</h3>
-                <NavLink to="/" ><Button type="button" onClick={event => this.sortList(event, 'front')}>A-Z</Button></NavLink>
-                <Button type="button" onClick={event => this.sortList(event, 'back')}>Z-A</Button>
+                { isLogged ? <NavLink to="/"><Button type="button" onClick={this.props.toggleUpdateNote}>View Your Notes</Button></NavLink> : null }
+
+                { isLogged ? <NavLink to="/form"><Button type="button" onClick={this.props.toggleUpdateNote}>+ Create A New Note</Button></NavLink> : null}
+                { isLogged ? <br /> : null}
+                { isLogged ? <h3>Sort Notes</h3> : null}
+                { isLogged ? <NavLink to="/" ><Button type="button" onClick={event => this.sortList(event, 'front')}>A-Z</Button></NavLink> : null }
+                { isLogged ? <Button type="button" onClick={event => this.sortList(event, 'back')}>Z-A</Button> : null }
             </Header>
         )
     }
