@@ -27,6 +27,10 @@ const Button = Styled.button`
     margin-top: 20px;
 `;
 
+const Error = Styled.p`
+    color: red;
+`;
+
 function Register(props) {
     function handleSubmit(e) {
         e.preventDefault();
@@ -42,6 +46,9 @@ function Register(props) {
                 <input type="text" placeholder="Username" name="username" id="defaultFormContactNameEx" className="form-control" value={props.user.username} onChange={props.handleChange} />
                 <br/>
                 <input type="password" placeholder="Password" name="password" id="defaultFormContactNameEx" className="form-control" value={props.user.password} onChange={props.handleChange} />
+                <br />
+                <input type="password" placeholder="Confirm Password" name="password2" id="defaultFormContactNameEx" className="form-control" value={props.user.password2} onChange={props.handleChange} />
+                <Error>{props.error}</Error>
                 <br/>
                 <Button type="button" onClick={handleSubmit}>Register</Button>
                 <br/><br/>
