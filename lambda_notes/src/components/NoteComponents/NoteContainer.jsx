@@ -48,7 +48,7 @@ function NoteContainer(props) {
             <Header><h1>Your Notes:</h1></Header>
             <P>{!isLogged ? 'You must login to view your notes' : ''}</P>
             <Container>
-                {!isLogged ? '' : <NoteList notes={props.notes} />}
+                {!isLogged ? '' : <NoteList notes={props.notes} copyNote={props.copyNote} />}
             </Container>
             
         </Wrapper>

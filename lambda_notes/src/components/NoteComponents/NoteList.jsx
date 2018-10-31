@@ -4,7 +4,7 @@ import Note from './Note';
 
 function NoteList(props) {
     if (props.notes === undefined ) return null;
-    return <Fragment>{props.notes.map(note => <Note key={note.id} note={note} />)}</Fragment>;
+    return <Fragment>{props.notes.map(note => <Note key={note.id} note={note} copyNote={props.copyNote} />)}</Fragment>;
 };
 
 export default NoteList;

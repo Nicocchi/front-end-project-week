@@ -50,6 +50,13 @@ const Content = Styled.div`
     white-space: pre-line;
 `;
 
+const CopyContainer = Styled.div`
+    background-color: red;
+    width: 50px;
+    text-align: center;
+    cursor: pointer;
+`;
+
 function Note(props) {
     let tags = props.note.tags;
     let tags2;
@@ -65,6 +72,7 @@ function Note(props) {
                  <Tags>{tags2}</Tags>
                  <Content className="block-with-text">{props.note.content}</Content>
              </NavLink>
+            <CopyContainer onClick={() => {props.copyNote(props.note)}}>Copy</CopyContainer>
          </Container>
 
         
