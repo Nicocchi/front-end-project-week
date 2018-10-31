@@ -32,10 +32,16 @@ export const LOGOUT_USER_START = 'LOGOUT_USER_START';
 export const LOGOUT_USER_COMPLETE = 'LOGOUT_USER_COMPLETE';
 export const LOGOUT_USER_FAILURE = 'LOGOUT_USER_FAILURE';
 
-export const getNotes = () => dispatch => {
+export const SET_ID_START = 'SET_ID_START';
+
+let globalID = 0;
+
+export const getNotes = (id) => dispatch => {
     dispatch({ type: NOTES_FETCH_START });
+    globalID = id;
     const token = localStorage.getItem("jwt");
-    const endpoint = 'http://localhost:8000/api/notes/get/all';
+    console.log('getID',id);
+    const endpoint = `http://localhost:8000/api/notes/get/all/${id}`;
     const options = {
         headers: {
             Authorization: token
@@ -63,7 +69,7 @@ export const addNewNote = note => dispatch => {
     };
 
     axios.post(endpoint, note, options)
-        .then(() => getNotes()(dispatch))
+        .then(() => getNotes(note.user_id)(dispatch))
         .then(() => {
             dispatch({ type: ADD_NOTE_COMPLETE });
         })
@@ -84,7 +90,7 @@ export const deleteNote = id => dispatch => {
     };
 
     axios.delete(endpoint, options)
-        .then(() => getNotes()(dispatch))
+        .then(() => getNotes(globalID)(dispatch))
         .then(() => {
             dispatch({ type: DELETE_NOTE_COMPLETE });
         })
@@ -108,6 +114,7 @@ export const updateNote = note => dispatch => {
 
     const nNote = {
         id: note.id,
+        user_id: note.user_id,
         tags: note.tags,
         title: note.title,
         content : note.content,
@@ -115,7 +122,7 @@ export const updateNote = note => dispatch => {
 
     const endpoint = `http://localhost:8000/api/note/edit/${nNote.id}`;
     axios.put(endpoint, nNote, options)
-        .then(() => getNotes()(dispatch))
+        .then(() => getNotes(note.user_id)(dispatch))
         .then(() => {
             dispatch({ type: UPDATE_NOTE_COMPLETE });
         })
@@ -156,4 +163,8 @@ export const loginUser = () => dispatch => {
 export const logoutUser = () => dispatch => {
     dispatch({ type: LOGOUT_USER_START });
 
+}
+
+export const setId = (id) => dispatch => {
+    dispatch({ type: SET_ID_START, payload: id})
 }

@@ -8,6 +8,7 @@ import NoteCreateForm from '../components/NoteComponents/NoteCreateForm';
 class NoteFormView extends Component {
     state = {
         note: {
+            user_id: 0,
             tags: '',
             title: '',
             content: '',
@@ -25,6 +26,7 @@ class NoteFormView extends Component {
         this.setState({
             note: {
                 ...this.state.note,
+                user_id: this.props.userId,
                 [e.target.name]: e.target.value,
             }
         });
@@ -78,6 +80,7 @@ class NoteFormView extends Component {
 const mapStateToProps = state => ({
     noteToUpdate: state.noteToUpdate,
     isUpdating: state.isUpdating,
+    userId: state.userId,
 });
 
 export default connect(mapStateToProps, { addNewNote, updateNote })(NoteFormView);

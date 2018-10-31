@@ -7,12 +7,12 @@ import NotePage from '../components/NoteComponents/NotePage';
 class NoteView extends Component {
     componentDidMount() {
         if (this.props.notes.length === 0) {
-            this.props.getNotes();
+            this.props.getNotes(this.props.userId);
         };
     };
 
     componentDidUpdate() {
-        this.props.getNotes();
+        this.props.getNotes(this.props.userId);
     }
 
     handleDeleteNote = id => {
@@ -41,6 +41,7 @@ class NoteView extends Component {
 const mapStateToProps = state => ({
     notes: state.notes,
     isLoading: state.isLoading,
+    userId: state.userId,
 });
 
 export default connect(mapStateToProps, { getNotes, deleteNote, setUpdateNote })(NoteView);

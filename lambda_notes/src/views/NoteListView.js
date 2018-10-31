@@ -8,7 +8,7 @@ import NoteContainer from '../components/NoteComponents/NoteContainer';
 class NoteListView extends Component {
     componentDidMount() {
         if(localStorage.getItem('jwt')) {
-            this.props.getNotes();
+            this.props.getNotes(this.props.userId);
         } else {
         }
     }
@@ -27,6 +27,7 @@ const mapStateToProps = state => ({
     filteredNotes: state.filteredNotes,
     isLoggingIn: state.isLoggingIn,
     isLoggedIn: state.isLoggedIn,
+    userId: state.userId,
 });
 
 export default connect(mapStateToProps, { getNotes })(NoteListView);

@@ -23,6 +23,7 @@ import {
     LOGOUT_USER_START,
     LOGOUT_USER_COMPLETE,
     LOGOUT_USER_FAILURE,
+    SET_ID_START,
 } from '../actions';
 
 const initialState = {
@@ -39,6 +40,7 @@ const initialState = {
     sort: null,
     isLoggingIn: false,
     isLoggedIn: false,
+    userId: null,
 };
 
 export const notesReducer = (state = initialState, action) => {
@@ -98,21 +100,23 @@ export const notesReducer = (state = initialState, action) => {
         case LOGIN_USER_START:
             return { ...state, isLoggingIn: true }
         case LOGIN_USER_COMPLETE:
-            return { ...state, isLoggingIn: false, isLoggedIn: true};
+            return { ...state, isLoggingIn: false, isLoggedIn: true, userId: action.payload };
         case LOGIN_USER_FAILURE:
             if(localStorage.getItem('jwt')) {
                 localStorage.removeItem('jwt');
             };
-            return { ...state, isLoggingIn: false, isLoggedIn: false };
+            return { ...state, isLoggingIn: false, isLoggedIn: false, userId: null };
         case LOGOUT_USER_START:
-            return { ...state, isLoggingIn: true, isLoggedIn: true }
+            return { ...state, isLoggingIn: false, isLoggedIn: false, userId: null  }
         case LOGOUT_USER_COMPLETE:
-            return { ...state, isLoggingIn: false, isLoggedIn: true};
+            return { ...state, isLoggingIn: false, isLoggedIn: false};
         case LOGOUT_USER_FAILURE:
             if(localStorage.getItem('jwt')) {
                 localStorage.removeItem('jwt');
             };
             return { ...state, isLoggingIn: false, isLoggedIn: false };
+        case SET_ID_START:
+            return { ...state, userId: action.payload };
         default:
             return state;
     }

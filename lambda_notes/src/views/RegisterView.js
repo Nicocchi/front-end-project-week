@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
-import Login from "../components/Authentication/Login";
-import { loginUser, setId } from '../store/actions';
+import Register from "../components/Authentication/Register";
+import { loginUser } from '../store/actions';
 
-class LoginView extends Component {
+class RegisterView extends Component {
     state = {
         user: {
             email: '',
+            username: '',
             password: '',
         },
         isUpdating: false,
@@ -22,14 +23,13 @@ class LoginView extends Component {
         });
     }
 
-    userLogin = e => {
+    userRegister = e => {
         // this.props.loginUser(this.state.user);
-        const endpoint = 'http://localhost:8000/api/users/login';
+        const endpoint = 'http://localhost:8000/api/users/register';
         console.log(this.state.user);
 
         axios.post(endpoint, this.state.user).then(res => {
             localStorage.setItem('jwt', res.data.token);
-            this.props.setId(res.data.userId);
             this.props.loginUser();
             this.props.history.push('/');
         }).catch(err => {
@@ -39,11 +39,11 @@ class LoginView extends Component {
 
     render() {
         return (
-            <Login
+            <Register
                 {...this.props}
                 user={this.state.user}
                 handleChange={this.handleChange}
-                loginUser={this.userLogin}
+                userRegister={this.userRegister}
             />
         );
     };
@@ -52,4 +52,4 @@ class LoginView extends Component {
 const mapStateToProps = state => ({
 });
 
-export default connect(mapStateToProps, { loginUser, setId })(LoginView);
+export default connect(mapStateToProps, { loginUser })(RegisterView);

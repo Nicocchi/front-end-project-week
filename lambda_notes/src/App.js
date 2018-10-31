@@ -10,6 +10,7 @@ import NoteListView from './views/NoteListView';
 import NoteView from './views/NoteView';
 import NoteFormView from './views/NoteFormView';
 import LoginView from "./views/LoginView";
+import RegisterView from "./views/RegisterView";
 
 const Wrapper = Styled.div`
   background-color: #f3f3f3;
@@ -44,6 +45,7 @@ class App extends Component {
         <Content>
           <Route exact path="/" component={NoteListView} />
             <Route exact path="/login" component={LoginView} />
+            <Route exact path="/register" component={RegisterView} />
           <Route exact path="/form" component={NoteFormView} />
           <Route exact path="/notes/:id" component={NoteView} />
         </Content>

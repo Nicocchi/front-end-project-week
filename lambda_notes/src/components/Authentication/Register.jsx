@@ -27,26 +27,28 @@ const Button = Styled.button`
     margin-top: 20px;
 `;
 
-function Login(props) {
+function Register(props) {
     function handleSubmit(e) {
         e.preventDefault();
-        props.loginUser();
+        props.userRegister();
     }
 
     return (
         <Wrapper>
             <form onSubmit={handleSubmit}>
-                <p className="h4 mb-4">Login</p>
+                <p className="h4 mb-4">Register Account</p>
                 <input type="text" placeholder="Email" name="email" id="defaultFormContactNameEx" className="form-control" defaultValue={props.user.email} onChange={props.handleChange} />
                 <br />
+                <input type="text" placeholder="Username" name="username" id="defaultFormContactNameEx" className="form-control" value={props.user.username} onChange={props.handleChange} />
+                <br/>
                 <input type="password" placeholder="Password" name="password" id="defaultFormContactNameEx" className="form-control" value={props.user.password} onChange={props.handleChange} />
                 <br/>
-                <Button type="button" onClick={handleSubmit}>Login</Button>
+                <Button type="button" onClick={handleSubmit}>Register</Button>
                 <br/><br/>
-                <p>Don't have an account? <NavLink to="/register">Register</NavLink> for one!</p>
+                <p>Already have an account? <NavLink to="/login">Login</NavLink> in and view your notes!</p>
             </form>
         </Wrapper>
     )
 }
 
-export default Login;
+export default Register;

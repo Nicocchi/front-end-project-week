@@ -26,6 +26,13 @@ const Button = Styled.button`
     margin-top: 20px;
 `;
 
+const P = Styled.p`
+position: relative;
+    text-align: center;
+    top: 200px;
+    font-size: 20px;
+`;
+
 function NoteCreateForm(props) {
     function handleSubmit(e) {
         e.preventDefault();
@@ -37,17 +44,27 @@ function NoteCreateForm(props) {
         }
     }
 
+    let isLogged = false;
+    if(localStorage.getItem('jwt')) {
+        isLogged = true;
+    } else {
+        isLogged = false;
+    }
+
     return (
         <Wrapper>
-            <form>
-                <p className="h4 mb-4">{props.isUpdating ? 'Edit Note:' : 'Create New Note:'}</p>
-                <input type="text" placeholder="Note Title" name="title" id="defaultFormContactNameEx" className="form-control" defaultValue={props.note.title} onChange={props.handleChange}/>
-                <br />
-                <input type="text" placeholder="Note Tags (Seperate with a , )" name="tags" id="defaultFormContactNameEx" className="form-control" value={props.note.tags} onChange={props.handleChange}/>
-                <br/>
-                <textarea type="text" placeholder="Note Content" name="content" id="defaultFormContactMessageEx" className="form-control" rows="3" value={props.note.content} onChange={props.handleChange}></textarea>
-                <Button type="button" onClick={handleSubmit}>{props.isUpdating ? 'Update' : 'Save'}</Button>
-            </form>
+            {
+                isLogged ? <form>
+                    <p className="h4 mb-4">{props.isUpdating ? 'Edit Note:' : 'Create New Note:'}</p>
+                    <input type="text" placeholder="Note Title" name="title" id="defaultFormContactNameEx" className="form-control" defaultValue={props.note.title} onChange={props.handleChange}/>
+                    <br />
+                    <input type="text" placeholder="Note Tags (Seperate with a , )" name="tags" id="defaultFormContactNameEx" className="form-control" value={props.note.tags} onChange={props.handleChange}/>
+                    <br/>
+                    <textarea type="text" placeholder="Note Content" name="content" id="defaultFormContactMessageEx" className="form-control" rows="3" value={props.note.content} onChange={props.handleChange}></textarea>
+                    <Button type="button" onClick={handleSubmit}>{props.isUpdating ? 'Update' : 'Save'}</Button>
+                </form> : <P>You need to be logged in to create a form</P>
+            }
+
         </Wrapper>
     )
 }

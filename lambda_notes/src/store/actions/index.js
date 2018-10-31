@@ -33,6 +33,8 @@ export {
     LOGOUT_USER_COMPLETE,
     LOGOUT_USER_FAILURE,
 
+    SET_ID_START,
+
     getNotes,
     addNewNote,
     deleteNote,
@@ -45,4 +47,5 @@ export {
     sortNotesBack,
     loginUser,
     logoutUser,
+    setId,
 } from './notesActions';
