@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import Register from "../components/Authentication/Register";
-import { loginUser } from '../store/actions';
+import { loginUser, setId } from '../store/actions';
 
 class RegisterView extends Component {
     state = {
@@ -27,6 +27,8 @@ class RegisterView extends Component {
                 this.setState({ error: 'Passwords do not match'})
             } else if (this.state.user.password.length <= 7 || this.state.user.password2.length <= 7) {
                 this.setState({ error: 'Passwords must be at least 8 characters'})
+            } else if(!this.validateEmail(this.state.user.email)) {
+                this.setState({error: 'Invalid email address.'});
             } else {
                 this.setState({
                     error: ''
@@ -52,19 +54,19 @@ class RegisterView extends Component {
             return;
         }
 
-        this.setState({
-            error: ''
-        });
-
         const endpoint = 'http://localhost:8000/api/users/register';
         const newUser = {
-            email: this.state.user.email,
+            email: this.state.user.email.toLowerCase(),
             username: this.state.user.username,
             password: this.state.user.password,
         }
 
         axios.post(endpoint, newUser).then(res => {
+            this.setState({
+                error: ''
+            });
             localStorage.setItem('jwt', res.data.token);
+            this.props.setId(res.data.newUserId);
             this.props.loginUser();
             this.props.history.push('/');
         }).catch(err => {
@@ -90,4 +92,4 @@ class RegisterView extends Component {
 const mapStateToProps = state => ({
 });
 
-export default connect(mapStateToProps, { loginUser })(RegisterView);
+export default connect(mapStateToProps, { loginUser, setId })(RegisterView);
