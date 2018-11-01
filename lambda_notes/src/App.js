@@ -43,11 +43,11 @@ class App extends Component {
           <Navigation />
         </SideNav>
         <Content>
-          <Route exact path="/" component={NoteListView} />
+            <Route exact path="/" component={NoteListView} />
             <Route exact path="/login" component={LoginView} />
             <Route exact path="/register" component={RegisterView} />
-          <Route exact path="/form" component={NoteFormView} />
-          <Route exact path="/notes/:id" component={NoteView} />
+            <Route exact path="/form" component={NoteFormView} />
+            <Route exact path="/notes/:id" component={NoteView} />
         </Content>
       </Wrapper>
     );

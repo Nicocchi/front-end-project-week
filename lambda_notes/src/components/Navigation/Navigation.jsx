@@ -14,6 +14,14 @@ const Header = Styled.header`
     display: flex;
     flex-direction: column;
     padding: 1%;
+    
+    a {
+            color: #4a494a
+    }
+    
+    a:hover {
+        color: #4a494a
+    }
 
     h1 {
         padding-top: 30px;
@@ -22,6 +30,8 @@ const Header = Styled.header`
         margin-bottom: 20px;
         margin-left: 10%;
         line-height: 40px;
+        
+        
     }
 
     h2 {
@@ -115,8 +125,7 @@ class Navigation extends Component {
 
         return (
             <Header>
-                <h1>Lambda</h1>
-                <h2>Notes</h2>
+                <NavLink to="/"><h1>Lambda</h1><h2>Notes</h2></NavLink>
                 <div>
                     {isLogged ? <H3>Welcome {this.props.username}</H3> : null}
                 </div>
