@@ -62,6 +62,11 @@ const Button = Styled.button`
     cursor: pointer;
 `;
 
+const H3 = Styled.h3`
+    font-size: 20px;
+    margin-left: 1%;
+`;
+
 class Navigation extends Component {
     state = {
         inputValue: '',
@@ -114,6 +119,9 @@ class Navigation extends Component {
             <Header>
                 <h1>Lambda</h1>
                 <h2>Notes</h2>
+                <div>
+                    {isLogged ? <H3>Welcome {this.props.username}</H3> : null}
+                </div>
                 <Search>
                 <FormInline className="md-form active-cyan active-cyan-2 ">
                     <Fa icon="search" />
@@ -141,7 +149,8 @@ class Navigation extends Component {
 
 const mapStateToProps = state => ({
   notes: state.notes,
-    isLoggedIn: state.isLoggingIn
+    isLoggedIn: state.isLoggingIn,
+    username: state.username
 });
 
 export default connect(mapStateToProps, { toggleUpdateNote, searchNote, searchNoteOff, sortNotesFront, sortNotesBack })(Navigation)

@@ -41,6 +41,7 @@ const initialState = {
     isLoggingIn: false,
     isLoggedIn: false,
     userId: null,
+    username: '',
 };
 
 export const notesReducer = (state = initialState, action) => {
@@ -98,7 +99,7 @@ export const notesReducer = (state = initialState, action) => {
         case SORT_NOTES_BACK:
             return { ...state, sorted: true, sort: 'back', notes: action.payload }
         case LOGIN_USER_START:
-            return { ...state, isLoggingIn: true }
+            return { ...state, isLoggingIn: true, username: action.payload }
         case LOGIN_USER_COMPLETE:
             return { ...state, isLoggingIn: false, isLoggedIn: true, userId: action.payload };
         case LOGIN_USER_FAILURE:

@@ -155,8 +155,8 @@ export const sortNotesBack = notes => dispatch => {
     return dispatch({ type: SORT_NOTES_BACK, payload: noteList});
 }
 
-export const loginUser = () => dispatch => {
-    dispatch({ type: LOGIN_USER_START });
+export const loginUser = username => dispatch => {
+    dispatch({ type: LOGIN_USER_START, payload: username });
 
 }
 

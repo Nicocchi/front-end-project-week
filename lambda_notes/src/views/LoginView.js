@@ -10,7 +10,6 @@ class LoginView extends Component {
             email: '',
             password: '',
         },
-        isUpdating: false,
         error: '',
     };
 
@@ -24,26 +23,30 @@ class LoginView extends Component {
     }
 
     validateEmail = email => {
-        const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        const re = new RegExp('/^(([^<>()[\\]\\\\.,;:\\s@"]+(\\.[^<>()[\\]\\\\.,;:\\s@"]+)*)|(".+"))@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$/', 'g');
         return re.test(email);
     }
 
     userLogin = e => {
-        // this.props.loginUser(this.state.user);
         if(!this.validateEmail(this.state.user.email)) {
             this.setState({ error: 'Invalid email address.'});
             return;
         }
 
+        const existingUser = {
+            email: this.state.user.email.toLowerCase(),
+            password: this.state.user.password
+        }
+
         const endpoint = 'http://localhost:8000/api/users/login';
 
-        axios.post(endpoint, this.state.user).then(res => {
+        axios.post(endpoint, existingUser).then(res => {
             this.setState({
                 error: ''
             });
             localStorage.setItem('jwt', res.data.token);
             this.props.setId(res.data.userId);
-            this.props.loginUser();
+            this.props.loginUser(res.data.username);
             this.props.history.push('/');
         }).catch(err => {
             this.setState({

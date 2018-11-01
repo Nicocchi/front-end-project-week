@@ -38,7 +38,7 @@ class RegisterView extends Component {
     }
 
     validateEmail = email => {
-        const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        const re = new RegExp('/^(([^<>()[\\]\\\\.,;:\\s@"]+(\\.[^<>()[\\]\\\\.,;:\\s@"]+)*)|(".+"))@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$/', 'g');
         return re.test(email);
     }
 
@@ -67,7 +67,7 @@ class RegisterView extends Component {
             });
             localStorage.setItem('jwt', res.data.token);
             this.props.setId(res.data.newUserId);
-            this.props.loginUser();
+            this.props.loginUser(res.data.username);
             this.props.history.push('/');
         }).catch(err => {
             this.setState({
