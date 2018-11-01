@@ -74,7 +74,10 @@ class Navigation extends Component {
     
 
     handleSubmit = e => {
-        if (e === '' || e === undefined || e.length <= 0) this.searchNoteOff;
+        if (e === '' || e === undefined || e.length <= 0) {
+            this.props.searchNoteOff();
+        };
+
         let updatedList = this.props.notes.filter(item => {
             return item.title.toLowerCase().search(e.toLowerCase()) !== -1;
         });

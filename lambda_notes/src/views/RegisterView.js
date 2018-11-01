@@ -72,7 +72,7 @@ class RegisterView extends Component {
                 error: err.response.data.error
             });
         });
-    }
+    };
 
     render() {
         return (
