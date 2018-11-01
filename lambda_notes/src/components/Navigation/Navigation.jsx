@@ -101,7 +101,7 @@ class Navigation extends Component {
       }
 
       handleLogout = e => {
-          this.props.toggleUpdateNote
+          this.props.toggleUpdateNote();
           if(localStorage.getItem('jwt')) {
               localStorage.removeItem('jwt');
               this.props.logoutUser();
