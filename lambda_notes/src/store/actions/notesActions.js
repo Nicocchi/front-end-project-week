@@ -36,7 +36,9 @@ export const REGISTER_USER_FAILURE = 'REGISTER_USER_FAILURE';
 
 export const SET_ID_START = 'SET_ID_START';
 
-export const CLEAR_ERROR = 'CLEAR_ERROR'
+export const CLEAR_ERROR = 'CLEAR_ERROR';
+
+export const PAGE_NOTES = 'PAGE_NOTES';
 
 let globalID = 0;
 
@@ -206,4 +208,8 @@ export const setId = (id) => dispatch => {
 
 export const clearError = () => dispatch => {
     dispatch({ type: CLEAR_ERROR });
+}
+
+export const pageNotes = pageOfItems => dispatch => {
+    dispatch({ type: PAGE_NOTES, payload: pageOfItems })
 }

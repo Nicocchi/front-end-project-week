@@ -37,6 +37,8 @@ export {
 
     CLEAR_ERROR,
 
+    PAGE_NOTES,
+
     getNotes,
     addNewNote,
     deleteNote,
@@ -52,4 +54,5 @@ export {
     registerUser,
     setId,
     clearError,
+    pageNotes,
 } from './notesActions';

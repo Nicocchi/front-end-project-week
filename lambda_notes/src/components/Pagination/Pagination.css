@@ -1,0 +1,23 @@
+.pagination {
+    margin: 5px;
+    font-size: 20px;
+    letter-spacing: 3px;
+}
+
+.disabled {
+    color: grey;
+    margin: 0 5px 0 5px;
+}
+
+.active {
+    color: blue;
+    margin: 0 5px 0 5px;
+}
+
+.current-page {
+    margin: 0 5px 0 5px;
+}
+
+.other {
+    margin: 0 5px 0 5px;
+}

@@ -26,6 +26,7 @@ import {
     REGISTER_USER_FAILURE,
     SET_ID_START,
     CLEAR_ERROR,
+    PAGE_NOTES,
 } from '../actions';
 
 const initialState = {
@@ -44,6 +45,7 @@ const initialState = {
     isLoggedIn: false,
     userId: null,
     username: '',
+    pageOfItems: [],
 };
 
 export const notesReducer = (state = initialState, action) => {
@@ -129,6 +131,8 @@ export const notesReducer = (state = initialState, action) => {
             return { ...state, userId: action.payload };
         case CLEAR_ERROR:
             return { ...state, error: ''}
+        case PAGE_NOTES:
+            return { ...state, pageOfItems: action.payload}
         default:
             return state;
     }
