@@ -1,5 +1,3 @@
-import { LOGIN_USER_COMPLETE } from "./notesActions";
-
 export {
     NOTES_FETCH_START,
     NOTES_FETCH_COMPLETE,
@@ -33,6 +31,10 @@ export {
     LOGOUT_USER_COMPLETE,
     LOGOUT_USER_FAILURE,
 
+    REGISTER_USER_START,
+    REGISTER_USER_COMPLETE,
+    REGISTER_USER_FAILURE,
+
     SET_ID_START,
 
     getNotes,
@@ -47,5 +49,6 @@ export {
     sortNotesBack,
     loginUser,
     logoutUser,
+    registerUser,
     setId,
 } from './notesActions';

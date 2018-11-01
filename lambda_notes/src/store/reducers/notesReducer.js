@@ -23,6 +23,9 @@ import {
     LOGOUT_USER_START,
     LOGOUT_USER_COMPLETE,
     LOGOUT_USER_FAILURE,
+    REGISTER_USER_START,
+    REGISTER_USER_COMPLETE,
+    REGISTER_USER_FAILURE,
     SET_ID_START,
 } from '../actions';
 
@@ -99,14 +102,15 @@ export const notesReducer = (state = initialState, action) => {
         case SORT_NOTES_BACK:
             return { ...state, sorted: true, sort: 'back', notes: action.payload }
         case LOGIN_USER_START:
-            return { ...state, isLoggingIn: true, username: action.payload }
+            return { ...state, isLoggingIn: true }
         case LOGIN_USER_COMPLETE:
-            return { ...state, isLoggingIn: false, isLoggedIn: true, userId: action.payload };
+            localStorage.setItem('jwt', action.payload.token);
+            return { ...state, isLoggingIn: false, isLoggedIn: true, username: action.payload.username };
         case LOGIN_USER_FAILURE:
             if(localStorage.getItem('jwt')) {
                 localStorage.removeItem('jwt');
             };
-            return { ...state, isLoggingIn: false, isLoggedIn: false, userId: null };
+            return { ...state, isLoggingIn: false, isLoggedIn: false, userId: null, error: action.payload };
         case LOGOUT_USER_START:
             return { ...state, isLoggingIn: false, isLoggedIn: false, userId: null  }
         case LOGOUT_USER_COMPLETE:
@@ -116,6 +120,16 @@ export const notesReducer = (state = initialState, action) => {
                 localStorage.removeItem('jwt');
             };
             return { ...state, isLoggingIn: false, isLoggedIn: false };
+        case REGISTER_USER_START:
+            return { ...state }
+        case REGISTER_USER_COMPLETE:
+            localStorage.setItem('jwt', action.payload.token);
+            return { ...state, isLoggingIn: false, isLoggedIn: true, username: action.payload.username };
+        case REGISTER_USER_FAILURE:
+            if(localStorage.getItem('jwt')) {
+                localStorage.removeItem('jwt');
+            };
+            return { ...state, error: action.payload };
         case SET_ID_START:
             return { ...state, userId: action.payload };
         default:

@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import axios from 'axios';
 import Register from "../components/Authentication/Register";
-import { loginUser, setId } from '../store/actions';
+import { loginUser, registerUser, setId } from '../store/actions';
 
 class RegisterView extends Component {
     state = {
@@ -12,7 +11,6 @@ class RegisterView extends Component {
             password: '',
             password2: '',
         },
-        isUpdating: false,
         error: '',
     };
 
@@ -52,26 +50,13 @@ class RegisterView extends Component {
             return;
         }
 
-        const endpoint = 'http://localhost:8000/api/users/register';
         const newUser = {
             email: this.state.user.email.toLowerCase(),
             username: this.state.user.username,
             password: this.state.user.password,
         }
 
-        axios.post(endpoint, newUser).then(res => {
-            this.setState({
-                error: ''
-            });
-            localStorage.setItem('jwt', res.data.token);
-            this.props.setId(res.data.newUserId);
-            this.props.loginUser(res.data.username);
-            this.props.history.push('/');
-        }).catch(err => {
-            this.setState({
-                error: err.response.data.error
-            });
-        });
+        this.props.registerUser(newUser);
     };
 
     render() {
@@ -80,6 +65,8 @@ class RegisterView extends Component {
                 {...this.props}
                 user={this.state.user}
                 error={this.state.error}
+                localError={this.props.error}
+                isLoggedIn={this.props.isLoggedIn}
                 handleChange={this.handleChange}
                 userRegister={this.userRegister}
             />
@@ -88,6 +75,8 @@ class RegisterView extends Component {
 };
 
 const mapStateToProps = state => ({
+    error: state.error,
+    isLoggedIn: state.isLoggedIn
 });
 
-export default connect(mapStateToProps, { loginUser, setId })(RegisterView);
+export default connect(mapStateToProps, { loginUser, registerUser, setId })(RegisterView);

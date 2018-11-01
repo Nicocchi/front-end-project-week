@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import axios from 'axios';
 import Login from "../components/Authentication/Login";
 import { loginUser, setId } from '../store/actions';
 
@@ -33,26 +32,33 @@ class LoginView extends Component {
             return;
         }
 
+        this.setState({
+            error: ''
+        });
+
         const existingUser = {
             email: this.state.user.email.toLowerCase(),
             password: this.state.user.password
         }
 
-        const endpoint = 'http://localhost:8000/api/users/login';
+        this.props.loginUser(existingUser);
+        // this.props.history.push('/');
 
-        axios.post(endpoint, existingUser).then(res => {
-            this.setState({
-                error: ''
-            });
-            localStorage.setItem('jwt', res.data.token);
-            this.props.setId(res.data.userId);
-            this.props.loginUser(res.data.username);
-            this.props.history.push('/');
-        }).catch(err => {
-            this.setState({
-                error: err.response.data.error
-            });
-        });
+        // const endpoint = 'http://localhost:8000/api/users/login';
+        //
+        // axios.post(endpoint, existingUser).then(res => {
+        //     this.setState({
+        //         error: ''
+        //     });
+        //     localStorage.setItem('jwt', res.data.token);
+        //     this.props.setId(res.data.userId);
+        //     this.props.loginUser(res.data.username);
+        //     this.props.history.push('/');
+        // }).catch(err => {
+        //     this.setState({
+        //         error: err.response.data.error
+        //     });
+        // });
     }
 
     render() {
@@ -60,7 +66,9 @@ class LoginView extends Component {
             <Login
                 {...this.props}
                 user={this.state.user}
-                error={this.state.error}
+                error={this.props.error}
+                localError={this.state.error}
+                isLoggedIn={this.props.isLoggedIn}
                 handleChange={this.handleChange}
                 loginUser={this.userLogin}
             />
@@ -69,6 +77,8 @@ class LoginView extends Component {
 };
 
 const mapStateToProps = state => ({
+    error: state.error,
+    isLoggedIn: state.isLoggedIn
 });
 
 export default connect(mapStateToProps, { loginUser, setId })(LoginView);

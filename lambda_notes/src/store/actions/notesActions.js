@@ -32,6 +32,10 @@ export const LOGOUT_USER_START = 'LOGOUT_USER_START';
 export const LOGOUT_USER_COMPLETE = 'LOGOUT_USER_COMPLETE';
 export const LOGOUT_USER_FAILURE = 'LOGOUT_USER_FAILURE';
 
+export const REGISTER_USER_START = 'REGISTER_USER_START';
+export const REGISTER_USER_COMPLETE = 'REGISTER_USER_COMPLETE';
+export const REGISTER_USER_FAILURE = 'REGISTER_USER_FAILURE';
+
 export const SET_ID_START = 'SET_ID_START';
 
 let globalID = 0;
@@ -155,13 +159,44 @@ export const sortNotesBack = notes => dispatch => {
     return dispatch({ type: SORT_NOTES_BACK, payload: noteList});
 }
 
-export const loginUser = username => dispatch => {
-    dispatch({ type: LOGIN_USER_START, payload: username });
+export const loginUser = user => dispatch => {
+    dispatch({ type: LOGIN_USER_START });
+
+    const endpoint = 'http://localhost:8000/api/users/login';
+    let id = 0;
+    axios.post(endpoint, user)
+        .then(res => {
+            id = res.data.userId;
+            dispatch({ type: LOGIN_USER_COMPLETE, payload: res.data });
+    })
+        .then(() => setId(id)(dispatch))
+        .then(() => getNotes(id)(dispatch))
+        .catch(err => {
+        dispatch({ type: LOGIN_USER_FAILURE, payload: err.response.data.error });
+    });
 
 }
 
 export const logoutUser = () => dispatch => {
     dispatch({ type: LOGOUT_USER_START });
+
+}
+
+export const registerUser = user => dispatch => {
+    dispatch({ type: REGISTER_USER_START });
+
+    const endpoint = 'http://localhost:8000/api/users/register';
+    let id = 0;
+    axios.post(endpoint, user)
+        .then(res => {
+            id = res.data.newUserId;
+            dispatch({ type: REGISTER_USER_COMPLETE, payload: res.data });
+        })
+        .then(() => setId(id)(dispatch))
+        .then(() => getNotes(id)(dispatch))
+        .catch(err => {
+            dispatch({ type: REGISTER_USER_FAILURE, payload: err.response.data.error });
+        });
 
 }
 

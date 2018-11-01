@@ -31,29 +31,40 @@ const Error = Styled.p`
     color: red;
 `;
 
+const P = Styled.p`
+    color: #4a494a;
+    font-size: 20px;
+    margin-left: 3%;
+`
+
 function Register(props) {
     function handleSubmit(e) {
         e.preventDefault();
         props.userRegister();
     }
 
+    let isLogged = props.isLoggedIn;
+
     return (
         <Wrapper>
-            <form onSubmit={handleSubmit}>
-                <p className="h4 mb-4">Register Account</p>
-                <input type="text" placeholder="Email" name="email" id="defaultFormContactNameEx" className="form-control" defaultValue={props.user.email} onChange={props.handleChange} />
-                <br />
-                <input type="text" placeholder="Username" name="username" id="defaultFormContactNameEx" className="form-control" value={props.user.username} onChange={props.handleChange} />
-                <br/>
-                <input type="password" placeholder="Password" name="password" id="defaultFormContactNameEx" className="form-control" value={props.user.password} onChange={props.handleChange} />
-                <br />
-                <input type="password" placeholder="Confirm Password" name="password2" id="defaultFormContactNameEx" className="form-control" value={props.user.password2} onChange={props.handleChange} />
-                <Error>{props.error}</Error>
-                <br/>
-                <Button type="button" onClick={handleSubmit}>Register</Button>
-                <br/><br/>
-                <p>Already have an account? <NavLink to="/login">Login</NavLink> in and view your notes!</p>
-            </form>
+            {
+                !isLogged ? <form onSubmit={handleSubmit}>
+                    <p className="h4 mb-4">Register Account</p>
+                    <input type="text" placeholder="Email" name="email" id="defaultFormContactNameEx" className="form-control" defaultValue={props.user.email} onChange={props.handleChange} />
+                    <br />
+                    <input type="text" placeholder="Username" name="username" id="defaultFormContactNameEx" className="form-control" value={props.user.username} onChange={props.handleChange} />
+                    <br/>
+                    <input type="password" placeholder="Password" name="password" id="defaultFormContactNameEx" className="form-control" value={props.user.password} onChange={props.handleChange} />
+                    <br />
+                    <input type="password" placeholder="Confirm Password" name="password2" id="defaultFormContactNameEx" className="form-control" value={props.user.password2} onChange={props.handleChange} />
+                    <Error>{props.localError != '' ? props.localError : props.error}</Error>
+                    <br/>
+                    <Button type="button" onClick={handleSubmit}>Register</Button>
+                    <br/><br/>
+                    <p>Already have an account? <NavLink to="/login">Login</NavLink> in and view your notes!</p>
+                </form> : <P>Thank you for registering!</P>
+            }
+
         </Wrapper>
     )
 }

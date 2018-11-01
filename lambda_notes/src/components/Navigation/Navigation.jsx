@@ -105,7 +105,7 @@ class Navigation extends Component {
           if(localStorage.getItem('jwt')) {
               localStorage.removeItem('jwt');
               this.props.logoutUser();
-              // this.forceUpdate();
+              this.forceUpdate();
           } else {
           }
       }
