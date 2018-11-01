@@ -101,8 +101,8 @@ class Navigation extends Component {
           this.props.toggleUpdateNote
           if(localStorage.getItem('jwt')) {
               localStorage.removeItem('jwt');
-              this.props.logoutUser;
-              this.forceUpdate();
+              this.props.logoutUser();
+              // this.forceUpdate();
           } else {
           }
       }
@@ -153,4 +153,4 @@ const mapStateToProps = state => ({
     username: state.username
 });
 
-export default connect(mapStateToProps, { toggleUpdateNote, searchNote, searchNoteOff, sortNotesFront, sortNotesBack })(Navigation)
+export default connect(mapStateToProps, { toggleUpdateNote, searchNote, searchNoteOff, sortNotesFront, sortNotesBack, logoutUser })(Navigation)
