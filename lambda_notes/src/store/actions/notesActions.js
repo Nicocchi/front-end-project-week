@@ -28,9 +28,7 @@ export const LOGIN_USER_START = 'LOGIN_USER_START';
 export const LOGIN_USER_COMPLETE = 'LOGIN_USER_COMPLETE';
 export const LOGIN_USER_FAILURE = 'LOGIN_USER_FAILURE';
 
-export const LOGOUT_USER_START = 'LOGOUT_USER_START';
-export const LOGOUT_USER_COMPLETE = 'LOGOUT_USER_COMPLETE';
-export const LOGOUT_USER_FAILURE = 'LOGOUT_USER_FAILURE';
+export const LOGOUT_USER = 'LOGOUT_USER';
 
 export const REGISTER_USER_START = 'REGISTER_USER_START';
 export const REGISTER_USER_COMPLETE = 'REGISTER_USER_COMPLETE';
@@ -180,7 +178,7 @@ export const loginUser = user => dispatch => {
 }
 
 export const logoutUser = () => dispatch => {
-    dispatch({ type: LOGOUT_USER_START });
+    dispatch({ type: LOGOUT_USER });
 
 }
 

@@ -20,9 +20,7 @@ import {
     LOGIN_USER_START,
     LOGIN_USER_COMPLETE,
     LOGIN_USER_FAILURE,
-    LOGOUT_USER_START,
-    LOGOUT_USER_COMPLETE,
-    LOGOUT_USER_FAILURE,
+    LOGOUT_USER,
     REGISTER_USER_START,
     REGISTER_USER_COMPLETE,
     REGISTER_USER_FAILURE,
@@ -112,15 +110,11 @@ export const notesReducer = (state = initialState, action) => {
                 localStorage.removeItem('jwt');
             };
             return { ...state, isLoggingIn: false, isLoggedIn: false, userId: null, error: action.payload };
-        case LOGOUT_USER_START:
-            return { ...state, isLoggingIn: false, isLoggedIn: false, userId: null  }
-        case LOGOUT_USER_COMPLETE:
-            return { ...state, isLoggingIn: false, isLoggedIn: false};
-        case LOGOUT_USER_FAILURE:
+        case LOGOUT_USER:
             if(localStorage.getItem('jwt')) {
                 localStorage.removeItem('jwt');
             };
-            return { ...state, isLoggingIn: false, isLoggedIn: false };
+            return { ...state, isLoggingIn: false, isLoggedIn: false, userId: null, username: '', error: ''  }
         case REGISTER_USER_START:
             return { ...state }
         case REGISTER_USER_COMPLETE:
