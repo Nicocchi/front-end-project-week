@@ -37,6 +37,8 @@ export {
 
     SET_ID_START,
 
+    CLEAR_ERROR,
+
     getNotes,
     addNewNote,
     deleteNote,
@@ -51,4 +53,5 @@ export {
     logoutUser,
     registerUser,
     setId,
+    clearError,
 } from './notesActions';

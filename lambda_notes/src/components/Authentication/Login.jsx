@@ -53,11 +53,11 @@ function Login(props) {
                     <input type="text" placeholder="Email" name="email" id="defaultFormContactNameEx" className="form-control" defaultValue={props.user.email} onChange={props.handleChange} />
                     <br />
                     <input type="password" placeholder="Password" name="password" id="defaultFormContactNameEx" className="form-control" value={props.user.password} onChange={props.handleChange} />
-                    <Error>{props.localError != '' ? props.localError : props.error}</Error>
+                    <Error>{props.localError !== '' ? props.localError : props.error}</Error>
                     <br/>
                     <Button type="button" onClick={handleSubmit}>Login</Button>
                     <br/><br/>
-                    <p>Don't have an account? <NavLink to="/register">Register</NavLink> for one!</p>
+                    <p>Don't have an account? <NavLink to="/register" onClick={props.clearError}>Register</NavLink> for one!</p>
                 </form> : <P>You have successfully logged in</P>
             }
         </Wrapper>

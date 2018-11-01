@@ -57,11 +57,11 @@ function Register(props) {
                     <input type="password" placeholder="Password" name="password" id="defaultFormContactNameEx" className="form-control" value={props.user.password} onChange={props.handleChange} />
                     <br />
                     <input type="password" placeholder="Confirm Password" name="password2" id="defaultFormContactNameEx" className="form-control" value={props.user.password2} onChange={props.handleChange} />
-                    <Error>{props.localError != '' ? props.localError : props.error}</Error>
+                    <Error>{props.localError !== '' ? props.localError : props.error}</Error>
                     <br/>
                     <Button type="button" onClick={handleSubmit}>Register</Button>
                     <br/><br/>
-                    <p>Already have an account? <NavLink to="/login">Login</NavLink> in and view your notes!</p>
+                    <p>Already have an account? <NavLink to="/login" onClick={props.clearError}>Login</NavLink> in and view your notes!</p>
                 </form> : <P>Thank you for registering!</P>
             }
 

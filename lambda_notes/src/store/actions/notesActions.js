@@ -38,6 +38,8 @@ export const REGISTER_USER_FAILURE = 'REGISTER_USER_FAILURE';
 
 export const SET_ID_START = 'SET_ID_START';
 
+export const CLEAR_ERROR = 'CLEAR_ERROR'
+
 let globalID = 0;
 
 export const getNotes = (id) => dispatch => {
@@ -202,4 +204,8 @@ export const registerUser = user => dispatch => {
 
 export const setId = (id) => dispatch => {
     dispatch({ type: SET_ID_START, payload: id})
+}
+
+export const clearError = () => dispatch => {
+    dispatch({ type: CLEAR_ERROR });
 }

@@ -27,6 +27,7 @@ import {
     REGISTER_USER_COMPLETE,
     REGISTER_USER_FAILURE,
     SET_ID_START,
+    CLEAR_ERROR,
 } from '../actions';
 
 const initialState = {
@@ -132,6 +133,8 @@ export const notesReducer = (state = initialState, action) => {
             return { ...state, error: action.payload };
         case SET_ID_START:
             return { ...state, userId: action.payload };
+        case CLEAR_ERROR:
+            return { ...state, error: ''}
         default:
             return state;
     }

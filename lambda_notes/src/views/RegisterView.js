@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Register from "../components/Authentication/Register";
-import { loginUser, registerUser, setId } from '../store/actions';
+import { loginUser, registerUser, setId, clearError } from '../store/actions';
 
 class RegisterView extends Component {
     state = {
@@ -50,6 +50,12 @@ class RegisterView extends Component {
             return;
         }
 
+        this.props.clearError();
+
+        this.setState({
+            error: ''
+        });
+
         const newUser = {
             email: this.state.user.email.toLowerCase(),
             username: this.state.user.username,
@@ -79,4 +85,4 @@ const mapStateToProps = state => ({
     isLoggedIn: state.isLoggedIn
 });
 
-export default connect(mapStateToProps, { loginUser, registerUser, setId })(RegisterView);
+export default connect(mapStateToProps, { loginUser, registerUser, setId, clearError })(RegisterView);

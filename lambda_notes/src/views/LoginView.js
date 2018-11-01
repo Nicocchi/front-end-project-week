@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Login from "../components/Authentication/Login";
-import { loginUser, setId } from '../store/actions';
+import { loginUser, setId, clearError } from '../store/actions';
 
 class LoginView extends Component {
     state = {
@@ -31,6 +31,8 @@ class LoginView extends Component {
             this.setState({ error: 'Invalid email address.'});
             return;
         }
+
+        this.props.clearError();
 
         this.setState({
             error: ''
@@ -81,4 +83,4 @@ const mapStateToProps = state => ({
     isLoggedIn: state.isLoggedIn
 });
 
-export default connect(mapStateToProps, { loginUser, setId })(LoginView);
+export default connect(mapStateToProps, { loginUser, setId, clearError })(LoginView);
